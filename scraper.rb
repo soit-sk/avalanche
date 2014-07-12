@@ -1,15 +1,11 @@
+require 'rubygems'
 require 'open-uri'
 require 'nokogiri'
-require 'pp'
-require 'iconv'
 
-html = open('http://www.hzs.sk/index.php?lang=sk&site=statistika&p=oblast:SL')
-html = doc = Nokogiri::HTML(html)
-table = doc.xpath('//html/body/table/tr/td/table/tr/td/table/td/table/tr')
-table.shift
-hedre0 = table.shift
-hedre1 = table.shift
-hedre = hedre0.xpath('.//td') + hedre1.xpath('.//td')
+html = open('http://www.hzs.sk/horska-zachranna-sluzba/statistika/')
+doc = Nokogiri::HTML(html)
+table = doc.xpath('//table')
+
 table.xpath('.//td').each_slice(9) do |row|
   data = {
     "date" => row[0].text.to_s,
@@ -22,14 +18,6 @@ table.xpath('.//td').each_slice(9) do |row|
     "snow" => row[7].text.to_s,
     "odtrh" => row[8].text.to_s
   }
-
-#  dt = {}
-#  data.each_pair do |x,y| 
-#    dt.merge!({
-#      x.to_s =>
-#      Iconv.iconv('utf8', 'cp1250', y).to_s
-#    })
-#  end
 
   ScraperWiki.save_sqlite(unique_keys = [], data = data)
 end
