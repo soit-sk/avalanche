@@ -20,5 +20,5 @@ table.xpath('.//td').each_slice(9) do |row|
     "odtrh" => row[8].text.to_s
   }
 
-  ScraperWiki.save_sqlite(unique_keys = [], data = data)
+  ScraperWiki.save([], data)
 end
