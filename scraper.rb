@@ -1,14 +1,16 @@
-require 'scraperwiki'
 require 'rubygems'
+require 'scraperwiki'
 require 'open-uri'
 require 'nokogiri'
 
 html = open('http://www.hzs.sk/horska-zachranna-sluzba/statistika/')
 doc = Nokogiri::HTML(html)
 table = doc.xpath('//table')
+i = 0
 
 table.xpath('.//td').each_slice(9) do |row|
   data = {
+    "unique_id" => i,
     "date" => row[0].text.to_s,
     "place" => row[1].text.to_s,
     "orientation" => row[2].text.to_s,
@@ -20,5 +22,7 @@ table.xpath('.//td').each_slice(9) do |row|
     "odtrh" => row[8].text.to_s
   }
 
-  ScraperWiki.save([], data)
+  ScraperWiki.save(["unique_id"], data)
+
+  i += 1
 end
