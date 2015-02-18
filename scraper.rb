@@ -5,7 +5,7 @@ require 'nokogiri'
 
 html = open('http://www.hzs.sk/horska-zachranna-sluzba/statistika/')
 doc = Nokogiri::HTML(html)
-table = doc.xpath('//table')
+table = doc.xpath('//table[@id="table"]')
 i = 0
 
 table.xpath('.//td').each_slice(9) do |row|
