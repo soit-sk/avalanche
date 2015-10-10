@@ -9,6 +9,8 @@ table = doc.xpath('//table[@id="table"]')
 i = 0
 
 table.xpath('.//td').each_slice(9) do |row|
+  next if row[7].text.to_s == 'Sneh'
+
   data = {
     "unique_id" => i,
     "date" => row[0].text.to_s,
