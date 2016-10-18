@@ -3,7 +3,7 @@ require 'scraperwiki'
 require 'open-uri'
 require 'nokogiri'
 
-html = open('http://www.hzs.sk/horska-zachranna-sluzba/statistika/')
+html = open('https://www.hzs.sk/horska-zachranna-sluzba/statistika/')
 doc = Nokogiri::HTML(html)
 table = doc.xpath('//table[@id="table"]')
 i = 0
